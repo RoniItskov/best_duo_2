@@ -1,0 +1,50 @@
+import pygame
+import random
+
+def Screen():
+    screen = pygame.display.set_mode((800, 600))
+    pygame.init()
+
+    # create display surface
+    screen = pygame.display.set_mode((800, 600))
+    pygame.display.set_caption("screen display check")
+
+
+    # load image
+    solider = pygame.image.load(r"C:\Users\jbt\Downloads\soldier.png").convert_alpha()
+    grass = pygame.image.load(r"C:\Users\jbt\Downloads\grass.png").convert_alpha()
+    flag = pygame.image.load(r"C:\Users\jbt\Downloads\flag.png").convert_alpha()
+    # resize images
+    img_solider = pygame.transform.scale(solider, (100, 100))
+    img_flag = pygame.transform.scale(flag, (100, 100))
+    img_grass = pygame.transform.scale(grass, (100, 100))
+
+    running = True
+    while running:
+        # fill background
+        screen.fill((0, 255, 0))
+
+        # display images at different positions
+        screen.blit(img_solider, (0, 0))
+        screen.blit(img_flag, (700, 500))
+
+        for i in range(0,20):
+            cordinate_grass = calc_placement_grass()
+            screen.blit(img_grass, cordinate_grass)
+
+        # update display
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+    pygame.quit()
+
+Screen()
+
+def calc_placement_grass():
+    grass_x = random.randrange(0, 800)
+    grass_y = random.randrange(0, 600)
+    cordinate_grass = (grass_x, grass_y)
+    return cordinate_grass
