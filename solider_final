@@ -1,0 +1,60 @@
+import pygame
+import consts
+
+# solider_img = pygame.image.load("soldier.png").convert_alpha()
+row, column = (0, 0)
+
+def set_solider_pos(row, column):
+    solider_pos = (row, column)
+    return solider_pos
+
+def lower_part():
+    lower_list = []
+    for i in range (consts.SOLDIER_COLS):
+        lower_list.append(set_solider_pos(consts.SOLDIER_ROWS - consts.SOLDIER_FEET_ROWS, i ))
+    return lower_list
+
+def upper_part():
+    upper_list = []
+    for i in range (consts.SOLDIER_BODY_ROWS):
+        for j in range (consts.SOLDIER_COLS):
+            upper_list.append(set_solider_pos(i, j))
+    return upper_list
+
+def is_pos_down_valid():
+    pos_x = row + 1
+    if pos_x <= consts.BOARD_ROWS:
+        set_solider_pos(pos_x, column)
+        return True
+    else:
+        return False
+
+def is_pos_up_valid():
+    pos_x = row - 1
+    if pos_x >= 0:
+        set_solider_pos(pos_x, column)
+        return True
+    else:
+        return False
+
+def is_pos_left_valid():
+    pos_y = column - 1
+    if pos_y >= 0:
+        set_solider_pos(row , pos_y)
+        return True
+    else:
+        return False
+
+def pos_right_valid():
+    pos_y = column + 1
+    if pos_y <= consts.BOARD_COLS:
+       return row * consts.CELL_SIZE , pos_y * consts.CELL_SIZE
+
+def sol_img():
+    solider = pygame.image.load("soldier.png").convert_alpha()
+    img_solider = pygame.transform.scale(solider,
+                                         (consts.CELL_SIZE * consts.SOLDIER_COLS * 2,
+                                          consts.CELL_SIZE * consts.SOLDIER_ROWS))
+    return img_solider
+
+
