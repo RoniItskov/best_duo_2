@@ -1,0 +1,35 @@
+import pygame
+from screen import *
+import consts
+import time
+
+def main():
+    pygame.init()
+    start_screen = pygame.display.set_mode(
+        (consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN:
+                start_screen.fill(consts.BLACK, rect=None)
+                drawGrid()
+                draw_mines(list_places_mines)
+                create_solider()
+                pygame.display.update()
+                time.sleep(1)
+        start_screen.fill(consts.GREEN)
+        create_flag()
+        create_solider()
+        draw_grass(list_places_grass)
+        create_text()
+        pygame.display.flip()
+main()
+
+
+
+
+
+
+
