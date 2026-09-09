@@ -1,0 +1,85 @@
+import pygame
+import random
+import consts
+import game_field
+import sys
+import time
+
+SCREEN = pygame.display.set_mode((consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
+pygame.display.set_caption("The Flag Game")
+
+
+def create_mines():
+    mines_place = []
+    for _ in range(consts.MINES_COUNT):
+        x = random.randint(consts.SOLDIER_ROWS * consts.CELL_SIZE, consts.WINDOW_WIDTH - 50)
+        y = random.randint(consts.SOLDIER_COLS * consts.CELL_SIZE, consts.WINDOW_HEIGHT - 50)
+        while y==0:
+            y = random.randint(0, consts.WINDOW_HEIGHT - 50)
+        while x==0:
+            x = random.randint(0, consts.WINDOW_WIDTH - 50)
+        mines_place.append((x, y))
+    return mines_place
+
+
+def draw_mines(places):
+    mine = pygame.image.load("mine.png").convert_alpha()
+    img_mine = pygame.transform.scale(mine, (consts.MINE_COLS * consts.CELL_SIZE, consts.MINE_ROWS * consts.CELL_SIZE))
+    for place in places:
+        SCREEN.blit(img_mine, place )
+
+def create_you_lose():
+    font = pygame.font.SysFont(None, 100)
+    img = font.render('You Lose!', True,
+                      consts.WHITE)
+    SCREEN.blit(img, (consts.WINDOW_WIDTH//3, consts.WINDOW_HEIGHT//3))
+
+
+def create_you_won():
+    font = pygame.font.SysFont(None, 100)
+    img = font.render('You won!', True,
+                      consts.WHITE)
+    SCREEN.blit(img, (consts.WINDOW_WIDTH//2, consts.WINDOW_HEIGHT//2))
+
+def create_text():
+    font = pygame.font.SysFont(None, 20)
+    img = font.render('Welcome to The Flag game. \n Have Fun!', True, consts.WHITE)
+    SCREEN.blit(img,(consts.CELL_SIZE * consts.SOLDIER_ROWS,0) )
+
+def create_grass():
+    grasses_place = []
+    for _ in range(20):
+        x= random.randint(0, consts.WINDOW_WIDTH-50)
+        y= random.randint(0, consts.WINDOW_HEIGHT-50)
+        grasses_place.append((x, y))
+    return grasses_place
+
+list_places_grass = create_grass()
+list_places_mines = create_mines()
+
+
+def draw_grass(places):
+    grass = pygame.image.load("grass.png").convert_alpha()
+    img_grass = pygame.transform.scale(grass, (50, 50))
+    for place in places:
+        SCREEN.blit(img_grass, place )
+
+
+def drawGrid():
+    for x in range(0, consts.WINDOW_WIDTH, consts.CELL_SIZE):
+        for y in range(0, consts.WINDOW_HEIGHT, consts.CELL_SIZE):
+            rect = pygame.Rect(x, y, consts.CELL_SIZE, consts.CELL_SIZE)
+            pygame.draw.rect(SCREEN, consts.GREEN, rect, 1)
+
+
+def create_flag():
+    flag = pygame.image.load("flag.png").convert_alpha()
+    img_flag = pygame.transform.scale(flag, (consts.FLAG_COLS * consts.CELL_SIZE, consts.FLAG_ROWS * consts.CELL_SIZE))
+    SCREEN.blit(img_flag, (game_field.flag_col*consts.CELL_SIZE, game_field.flag_row*consts.CELL_SIZE))
+
+
+def create_solider():
+    solider = pygame.image.load("soldier.png").convert_alpha()
+    img_solider = pygame.transform.scale(solider,
+                                         (consts.CELL_SIZE * consts.SOLDIER_COLS * 2, consts.CELL_SIZE * consts.SOLDIER_ROWS))
+    SCREEN.blit(img_solider, (0,0))
