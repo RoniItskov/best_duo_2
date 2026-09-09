@@ -1,0 +1,37 @@
+import consts
+flag_row = consts.BOARD_ROWS - consts.FLAG_ROWS
+flag_col = consts.BOARD_COLS - consts.FLAG_COLS
+
+def convert_mine_positions(mine_place):
+    mine_positions = []
+    for i in range (20):
+        mine_row = mine_place[i][1] // consts.CELL_SIZE
+        mine_col = mine_place[i][0] // consts.CELL_SIZE
+        mine_pos = ( mine_row , mine_col )
+        all_mine_pos = [(mine_row , mine_col), (mine_row , mine_col + 1), (mine_row , mine_col + 2)]
+        mine_positions.append(all_mine_pos)
+    return mine_positions
+
+def check_if_hit_mine(mine_positions, lower_list):
+    for i in range (len(lower_list)):
+        for j in range (len(mine_positions)):
+            if lower_list[i] == mine_positions[j][0] or lower_list[i] == mine_positions[j][1] or lower_list[i] == mine_positions[j][2]:
+                return True
+    return False
+
+def create_flag_pos_list():
+    flag_pos_list = []
+    flag_current_row_pos = []
+    for i in range (consts.FLAG_ROWS):
+        for j in range (consts.FLAG_COLS):
+            flag_current_row_pos.append((flag_row + i, flag_col + j))
+        flag_pos_list.append(flag_current_row_pos)
+    return flag_pos_list
+
+def check_if_hit_flag(flag_pos_list , upper_list):
+    for i in range (consts.SOLDIER_BODY_ROWS):
+        for j in range (consts.SOLDIER_COLS):
+            current_pos = upper_list[i][j]
+            if current_pos in flag_pos_list:
+                return True
+    return False
