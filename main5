@@ -1,0 +1,10 @@
+import pygame
+import Screen
+import Screen
+import consts
+import time
+
+def main():
+    Screen.draw_base_screen()
+
+main()
