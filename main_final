@@ -1,0 +1,54 @@
+import pygame
+from pygame.constants import K_LEFT, K_RIGHT
+
+import Solider
+import game_field
+import screen
+from screen import *
+import consts
+import time
+
+def main():
+    pygame.init()
+    start_screen = pygame.display.set_mode(
+        (consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    start_screen.fill(consts.BLACK, rect=None)
+                    drawGrid()
+                    draw_mines(list_places_mines)
+                    create_solider()
+                    pygame.display.update()
+                    time.sleep(1)
+                
+
+
+        start_screen.fill(consts.GREEN)
+        create_flag()
+        create_solider()
+        draw_grass(list_places_grass)
+        create_text()
+        pygame.display.flip()
+
+
+        pos_mine = game_field.convert_mine_positions(list_places_mines)
+        pos_flag = game_field.create_flag_pos_list()
+        if game_field.check_if_hit_mine(pos_mine, Solider.lower_part()):
+            screen.create_you_lose()
+            running = False
+        elif game_field.check_if_hit_flag(pos_flag, Solider.upper_part()):
+            screen.create_you_won()
+            running = False
+
+
+
+
+
+
+
+main()
