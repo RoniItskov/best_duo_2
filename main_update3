@@ -1,0 +1,36 @@
+import pygame
+import Screen
+import Screen
+import consts
+
+def main():
+    global SCREEN
+    SCREEN = pygame.display.set_mode(
+            (consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
+    pygame.init()
+
+    list_places = Screen.create_grass()
+    # create display surface
+
+    running = True
+    while running:
+        # fill background
+        SCREEN.fill(consts.GREEN)
+        Screen.create_flag()
+        Screen.create_solider()
+        Screen.draw_grass(list_places)
+        Screen.create_text()
+
+        # update display
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    Screen.Screen_grid()
+
+    pygame.quit()
+
+main()
